@@ -111,14 +111,3 @@ frontend/
 ├── package.json
 └── .env
 ```
-
-## Next Steps
-
-- Database Schema Design: Define tables and relationships.
-- Implement Repository & Service Layers.
-- Develop Factory and Observer Patterns for appointments and notifications.
-- Build Frontend Components & API Integration.
-
----
-
-This document will evolve as the project progresses.
