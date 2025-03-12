@@ -1,71 +1,62 @@
-Smart Appointment System - Context
+# Smart Appointment System
 
-Project Overview
+## Project Overview
 
-The Smart Appointment System is a web-based platform developed using ASP.NET Core MVC for the backend and React.js for the frontend. The system aims to provide an efficient and scalable way to schedule, manage, and notify users about their appointments.
+The **Smart Appointment System** is a web-based platform developed using **ASP.NET Core MVC** for the backend and **React.js** for the frontend. The system provides an efficient, scalable solution for scheduling, managing, and notifying users about appointments.
 
-Technology Stack
+## Technology Stack
 
-Backend: ASP.NET Core MVC, Entity Framework Core, SQL Server
+- **Backend:** ASP.NET Core MVC, Entity Framework Core, SQL Server
+- **Frontend:** React.js, Context API
+- **Design Patterns:** Singleton, Factory, Observer, Strategy, Repository
 
-Frontend: React.js, Context API
+## Features
 
-Design Patterns: Singleton, Factory, Observer, Strategy, Repository
+### User Management
 
-Authentication & Authorization: JWT (JSON Web Token)
+- User registration and login with roles (`Patient`, `Doctor`, `Admin`).
 
-Database: SQL Server
+### Appointment Management
 
-Key Functionalities
+- Booking, rescheduling, and canceling appointments.
+- Multiple appointment types (Online, Physical, Urgent).
 
-User Management:
+### Notifications
 
-User roles: Patient, Doctor, Admin
+- Email and SMS notifications for appointment confirmations and reminders.
 
-Registration and authentication (JWT-based login)
+### Filtering & Sorting
 
-Appointment Management:
+- Sort appointments by date, doctor, or type.
+- Filter based on user preferences.
 
-Booking, rescheduling, and canceling appointments
+## Design Patterns Implementation
 
-Different appointment types (Online, Physical, Urgent)
+- **Singleton Pattern:**
 
-Notifications:
+  - Ensures a single instance of `LoggerService` across the application.
 
-Email and SMS notifications for appointment confirmations and reminders
+- **Factory Pattern:**
 
-Filtering & Sorting:
+  - Dynamically creates different appointment types.
 
-Sort appointments by date, doctor, or type
+- **Observer Pattern:**
 
-Filter based on user preferences
+  - Sends Email and SMS notifications triggered by appointment-related events.
 
-Design Patterns Implementation
+- **Strategy Pattern**
 
-Singleton Pattern:
+  - Flexible sorting strategies (by date, doctor, type).
 
-Used for LoggerService to ensure a single instance for logging across the application.
+- **Repository Pattern**
 
-Factory Pattern:
+  - Abstracts database interactions using Entity Framework Core.
 
-Used to create different appointment types dynamically.
+## Project Structure
 
-Observer Pattern:
+### Backend (ASP.NET Core MVC)
 
-Implemented for event-driven notifications (email and SMS when an appointment is booked).
-
-Strategy Pattern:
-
-Enables different sorting strategies for appointments (e.g., by date, by doctor, by type).
-
-Repository Pattern:
-
-Provides an abstraction layer for database operations using Entity Framework Core.
-
-Project Structure
-
-Backend (ASP.NET Core MVC)
-
+```
 SmartAppointmentSystem/
 ├── Controllers/
 │   ├── AppointmentController.cs
@@ -74,60 +65,60 @@ SmartAppointmentSystem/
 ├── Models/
 │   ├── Appointment.cs
 │   ├── User.cs
-│   ├── Doctor.cs
-├── Repositories/
-│   ├── IAppointmentRepository.cs
-│   ├── AppointmentRepository.cs
-├── Services/
-│   ├── AppointmentService.cs
-│   ├── NotificationService.cs
-│   ├── LoggingService.cs
+│   └── Doctor.cs
 ├── Patterns/
 │   ├── Factory/
-│   │   ├── AppointmentFactory.cs
+│   │   └── AppointmentFactory.cs
 │   ├── Observer/
 │   │   ├── IObserver.cs
 │   │   ├── EmailNotifier.cs
-│   │   ├── SmsNotifier.cs
-│   ├── Strategy/
-│   │   ├── ISortingStrategy.cs
-│   │   ├── DateSortingStrategy.cs
-│   │   ├── DoctorSortingStrategy.cs
+│   │   └── SmsNotifier.cs
 │   ├── Singleton/
-│   │   ├── LoggerService.cs
+│   │   └── LoggerService.cs
+│   └── Strategy/
+│       ├── ISortingStrategy.cs
+│       ├── DateSortingStrategy.cs
+│       └── DoctorSortingStrategy.cs
+├── Repositories/
+│   ├── IRepository.cs
+│   └── UserRepository.cs
+├── Services/
+│   ├── AppointmentService.cs
+│   ├── NotificationService.cs
+│   └── AuthService.cs
 ├── appsettings.json
 ├── Program.cs
 └── Startup.cs
+```
 
-Frontend (React.js)
+### Frontend (React.js)
 
+```
 frontend/
 ├── src/
 │   ├── components/
 │   │   ├── AppointmentCard.js
-│   │   ├── Notification.js
+│   │   └── Notification.js
 │   ├── pages/
 │   │   ├── Dashboard.js
-│   │   ├── Appointments.js
+│   │   └── Appointments.js
 │   ├── context/
-│   │   ├── AppointmentContext.js
+│   │   └── AppointmentContext.js
 │   ├── hooks/
-│   │   ├── useFetchAppointments.js
+│   │   └── useFetchAppointments.js
 │   ├── App.js
-│   ├── index.js
+│   └── index.js
 ├── package.json
 └── .env
+```
 
-Next Steps
+## Next Steps
 
-Database Schema Design – Define tables and relationships.
+- Database Schema Design: Define tables and relationships.
+- Implement Repository & Service Layers.
+- Develop Factory and Observer Patterns for appointments and notifications.
+- Build Frontend Components & API Integration.
 
-Implement Repository & Service Layers.
-
-Develop Factory and Observer Patterns for appointments and notifications.
-
-Build Frontend Components & API Integration.
+---
 
 This document will evolve as the project progresses.
-
-
