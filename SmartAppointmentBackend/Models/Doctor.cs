@@ -12,6 +12,8 @@ namespace SmartAppointmentBackend.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        public string Email { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Specialization { get; set; } // Örn: Kardiyolog, Ortopedist

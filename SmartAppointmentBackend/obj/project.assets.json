@@ -4457,11 +4457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/furkanozdal/Documents/SmartAppointmentSystem/SmartAppointmentBackend/SmartAppointmentBackend.csproj",
+      "projectUniqueName": "/Users/furkanozdal/Downloads/SmartAppointmentSystem/SmartAppointmentBackend/SmartAppointmentBackend.csproj",
       "projectName": "SmartAppointmentBackend",
-      "projectPath": "/Users/furkanozdal/Documents/SmartAppointmentSystem/SmartAppointmentBackend/SmartAppointmentBackend.csproj",
+      "projectPath": "/Users/furkanozdal/Downloads/SmartAppointmentSystem/SmartAppointmentBackend/SmartAppointmentBackend.csproj",
       "packagesPath": "/Users/furkanozdal/.nuget/packages/",
-      "outputPath": "/Users/furkanozdal/Documents/SmartAppointmentSystem/SmartAppointmentBackend/obj/",
+      "outputPath": "/Users/furkanozdal/Downloads/SmartAppointmentSystem/SmartAppointmentBackend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/furkanozdal/.nuget/NuGet/NuGet.Config"

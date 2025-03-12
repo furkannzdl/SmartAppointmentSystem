@@ -38,9 +38,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthService>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddControllers(); // ✅ For pure Web APIs
 
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 
 
 // Database Connection
@@ -54,17 +56,20 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+   // app.UseHttpsRedirection(); 
 }
 
-app.UseHttpsRedirection();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllers(); // Required for [ApiController] routing
 
 app.MapControllerRoute(
     name: "default",

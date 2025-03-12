@@ -23,9 +23,9 @@ namespace SmartAppointmentBackend.Models
 
         // Navigation Properties
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [ForeignKey("DoctorId")]
-        public Doctor Doctor { get; set; }
+        public Doctor? Doctor { get; set; }
     }
 }

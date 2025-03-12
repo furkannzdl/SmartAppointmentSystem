@@ -1,34 +1,50 @@
-using Microsoft.IdentityModel.Tokens;
-using SmartAppointmentBackend.Models;
+using SmartAppointmentBackend.Factories;
 using SmartAppointmentBackend.Repositories;
-using System;
+using SmartAppointmentBackend.Models;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using BCrypt.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace SmartAppointmentBackend.Services
 {
     public class AuthService
     {
-        private readonly string _secretKey = "MySuperSecureJWTKey_withmorethan32bits_123456789!";
+        private readonly string _secretKey;
         private readonly IUserRepository _userRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, IDoctorRepository doctorRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _doctorRepository = doctorRepository;
+            _secretKey = configuration["Jwt:Key"];
         }
 
-        public async Task<string> RegisterUser(string username, string password, string role)
-        {
-            var existingUser = await _userRepository.GetUserByUsernameAsync(username);
-            if (existingUser != null)
-                return null; // User already exists
 
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            var user = new User { Username = username, PasswordHash = hashedPassword, Role = role };
+        public async Task<string> RegisterUser(string username, string password, string role)
+{
+            var existingUser = await _userRepository.GetUserByUsernameAsync(username);
+            if (existingUser != null) return null;
+
+            var user = UserFactory.CreateUser(username, password, role);
             await _userRepository.AddUserAsync(user);
+
+            // Auto-create doctor if role is Doctor
+            if (role == "Doctor")
+            {
+                var doctor = new Doctor
+                {
+                    Name = username,
+                    Email = $"{username.ToLower()}@example.com", // Optional: make this dynamic or take from request
+                    Specialization = "General Practitioner" 
+                };
+
+                // Save doctor to DB
+                await _doctorRepository.AddDoctorAsync(doctor);
+            }
 
             return GenerateToken(user);
         }
@@ -37,7 +53,7 @@ namespace SmartAppointmentBackend.Services
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                return null; // Invalid credentials
+                return null;
 
             return GenerateToken(user);
         }

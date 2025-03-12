@@ -4,6 +4,7 @@ using SmartAppointmentBackend.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SmartAppointmentBackend.Strategies;
 
 
 namespace SmartAppointmentBackend.Controllers
@@ -36,6 +37,17 @@ namespace SmartAppointmentBackend.Controllers
             }
             return Ok(appointment);
         }
+
+        [HttpPost("book")]
+        public async Task<IActionResult> BookAppointment([FromBody] Appointment appointment)
+        {
+            IAppointmentStrategy strategy = new PatientAppointmentStrategy(_appointmentRepository);
+            bool success = await strategy.BookAppointment(appointment);
+
+            if (!success) return BadRequest("Appointment slot already booked.");
+            return Ok("Appointment booked successfully.");
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateAppointment(Appointment appointment)
