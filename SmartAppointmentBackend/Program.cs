@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SmartAppointmentBackend.Services;
+using SmartAppointmentBackend.Observers;
 
 
 
@@ -36,6 +37,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAppointmentSubject, AppointmentSubject>();
+builder.Services.AddScoped<IAppointmentObserver, EmailNotificationObserver>(); // if used directly
 
 // Add services to the container.
 //builder.Services.AddControllersWithViews();

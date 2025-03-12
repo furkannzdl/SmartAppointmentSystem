@@ -24,12 +24,12 @@ namespace SmartAppointmentBackend.Services
         }
 
 
-        public async Task<string> RegisterUser(string username, string password, string role)
+        public async Task<string> RegisterUser(string username, string password, string role, string email)
 {
             var existingUser = await _userRepository.GetUserByUsernameAsync(username);
             if (existingUser != null) return null;
 
-            var user = UserFactory.CreateUser(username, password, role);
+            var user = UserFactory.CreateUser(username, password, role, email);
             await _userRepository.AddUserAsync(user);
 
             // Auto-create doctor if role is Doctor
@@ -38,7 +38,7 @@ namespace SmartAppointmentBackend.Services
                 var doctor = new Doctor
                 {
                     Name = username,
-                    Email = $"{username.ToLower()}@example.com", // Optional: make this dynamic or take from request
+                    Email = email, // Optional: make this dynamic or take from request
                     Specialization = "General Practitioner" 
                 };
 

@@ -18,7 +18,7 @@ namespace SmartAppointmentBackend.Controllers
         [HttpPost("signup")]
         public async Task<IActionResult> Signup([FromBody] SignupRequest request)
         {
-            var token = await _authService.RegisterUser(request.Username, request.Password, request.Role);
+            var token = await _authService.RegisterUser(request.Username, request.Password, request.Role, request.Email);
 
             if (token == null)
                 return BadRequest(new { message = "User already exists" });
@@ -43,6 +43,8 @@ namespace SmartAppointmentBackend.Controllers
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; } // "Patient", "Doctor", "Admin"
+
+        public string Email { get; set; } 
     }
 
     public class LoginRequest

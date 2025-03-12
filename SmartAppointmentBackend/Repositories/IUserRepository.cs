@@ -8,5 +8,8 @@ namespace SmartAppointmentBackend.Repositories
     {
         Task<User> GetUserByUsernameAsync(string username);
         Task AddUserAsync(User user);
+
+        Task<User> GetUserByIdAsync(int id);
+
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SmartAppointmentBackend.Strategies;
+using SmartAppointmentBackend.Observers;
+
 
 
 namespace SmartAppointmentBackend.Controllers
@@ -16,10 +18,25 @@ namespace SmartAppointmentBackend.Controllers
     {
         private readonly IAppointmentRepository _appointmentRepository;
 
-        public AppointmentController(IAppointmentRepository appointmentRepository)
+        private readonly IAppointmentSubject _appointmentSubject;
+
+        private readonly IAppointmentObserver _appointmentObserver;
+
+        public AppointmentController(
+            IAppointmentRepository repository,
+            IAppointmentSubject appointmentSubject,
+            IAppointmentObserver appointmentObserver // Inject the observer
+        )
         {
-            _appointmentRepository = appointmentRepository;
+            _appointmentRepository = repository;
+            _appointmentSubject = appointmentSubject;
+            _appointmentObserver = appointmentObserver;
+
+            _appointmentSubject.Attach(_appointmentObserver); // Attach it here
         }
+
+
+        
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
